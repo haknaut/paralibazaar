@@ -9,9 +9,8 @@ import { ToastProvider } from '@/components/Toast';
 
 // Google Sans is self-hosted from `public/fonts` (see the @font-face block in
 // globals.css) because `next/font/google`'s bundled font list predates the
-// family and would reject it. The Noto faces are still pulled through next/font
-// and sit behind it in the stack, so Hindi and Punjabi — which Google Sans
-// does not cover — fall through to a face that has those glyphs.
+// family and would reject it. It renders all three scripts itself (measured),
+// so the two Noto faces below are a safety fallback that never paints.
 const notoDevanagari = Noto_Sans_Devanagari({
   subsets: ['devanagari'],
   variable: '--font-noto-deva',
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0f62fe',
+  themeColor: '#166b3a',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -49,6 +48,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
+        {/* Above-the-fold type: the UI font + the icon font. Everything else
+            loads on demand; without this the first paint waits on discovery. */}
+        <link rel="preload" href="/fonts/GoogleSans-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/MaterialSymbolsRounded-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
       </head>
       <body className="min-h-dvh bg-canvas font-sans antialiased">
         <I18nProvider>

@@ -11,7 +11,7 @@ import { boundsOfPoints, type MapPoint } from './types';
  * drop shadow; status is carried by the fill, drawn from the semantic ramp.
  */
 function listingIcon(badge: string, status: 'open' | 'pending' | 'collected') {
-  const bg = status === 'collected' ? '#8c8c8c' : status === 'pending' ? '#002d9c' : '#0f62fe';
+  const bg = status === 'collected' ? '#8c8c8c' : status === 'pending' ? '#0b4223' : '#166b3a';
   return L.divIcon({
     className: 'parali-marker',
     iconSize: [30, 30],

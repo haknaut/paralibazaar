@@ -206,7 +206,7 @@ export function ImpactDashboard() {
                 />
                 <YAxis tick={{ fontSize: 11, fill: 'var(--color-ink-muted)' }} axisLine={false} tickLine={false} />
                 <Tooltip
-                  cursor={{ fill: 'rgba(15,98,254,0.06)' }}
+                   cursor={{ fill: 'rgba(22,107,58,0.08)' }}
                   contentStyle={{
                     borderRadius: 0,
                     border: '1px solid var(--color-hairline)',

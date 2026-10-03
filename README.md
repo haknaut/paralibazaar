@@ -237,8 +237,11 @@ does not.
 
 ### Type & icons
 
-- **Google Sans** leads every script it covers. It has no Devanagari or Gurmukhi, so those fall
-  through to Noto Sans Devanagari / Noto Sans Gurmukhi, which are pulled through `next/font`.
+- **Google Sans** renders English, Hindi and Punjabi (measured — it wins the
+  stack for Gurmukhi text, so the two Noto faces behind it are fallback only).
+  Every TTF is subset to the scripts the app uses (Latin + Indic +
+  punctuation), which took `public/fonts` from ~17 MB to under 1 MB with
+  pixel-identical rendering.
 - The Google Sans and Material Symbols files are **self-hosted** from `public/fonts`, so a live
   demo has no font request to the network and cannot font-swap mid-pitch.
 - `next/font/google` cannot load these two families — its bundled font list predates both — which

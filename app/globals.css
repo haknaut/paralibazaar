@@ -7,14 +7,15 @@
 /* ==========================================================================
    Self-hosted typefaces
 
-   Google Sans carries English, Latin numerals and punctuation. It has no
-   Devanagari or Gurmukhi coverage, so those scripts fall through to the two
-   Noto faces below — the browser picks the first family in the stack that
-   actually has the glyph, so mixed-script lines need no special handling.
+   Google Sans carries all three scripts — Latin, Devanagari and Gurmukhi
+   (verified: it wins the stack for Punjabi text, Noto never renders). The
+   two Noto faces stay in the stack purely as a safety fallback. Each TTF is
+   subset to the scripts the app uses (latin + indic + punctuation), which
+   took the folder from ~17 MB to under 1 MB.
 
    Files live in `public/fonts`, so a demo has no font request to the network
    and cannot font-swap mid-pitch. `swap` still keeps text visible while a
-   multi-megabyte TTF decodes.
+   face decodes.
    ========================================================================== */
 
 @font-face {
@@ -78,11 +79,14 @@
    ========================================================================== */
 
 @theme {
-  /* --- Brand & accent: one blue, used sparingly --- */
-  --color-primary: #0f62fe;
-  --color-primary-hover: #0050e6;
-  --color-primary-active: #002d9c;
+  /* --- Brand & accent: field green, used sparingly. Harvest gold is the
+         one highlight — the kicker pill and the logo tile, nowhere else. --- */
+  --color-primary: #166b3a;
+  --color-primary-hover: #0f5a30;
+  --color-primary-active: #0b4223;
   --color-on-primary: #ffffff;
+  --color-accent: #e3a008;
+  --color-on-accent: #221a00;
 
   /* --- Surfaces --- */
   --color-canvas: #ffffff;
@@ -228,10 +232,12 @@
 html[data-theme='dark'] {
   color-scheme: dark;
 
-  --color-primary: #4589ff;
-  --color-primary-hover: #78a9ff;
-  --color-primary-active: #a6c8ff;
-  --color-on-primary: #161616;
+  --color-primary: #3fa15f;
+  --color-primary-hover: #6cc484;
+  --color-primary-active: #9bdbae;
+  --color-on-primary: #071a0e;
+  --color-accent: #e8b32a;
+  --color-on-accent: #221a00;
 
   --color-canvas: #161616;
   --color-surface-1: #262626;
