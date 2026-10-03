@@ -64,7 +64,7 @@ export function LandingContent() {
             has to come from below as well. */}
         <div className="absolute inset-0 bg-gradient-to-t from-hero/80 via-hero/30 to-transparent lg:hidden" />
 
-        <div className="relative w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-16">
+        <div className="relative w-full px-6 py-16 sm:px-10 sm:py-24 lg:px-16">
           <p className="mb-5 inline-flex items-center gap-2 bg-primary px-3 py-1 text-caption text-on-primary">
             <Icon name="earth" size={14} /> {t('heroKicker')}
           </p>

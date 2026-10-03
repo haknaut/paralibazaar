@@ -30,7 +30,7 @@ export function Header() {
       {/* Carbon top-nav: flat canvas, 1px bottom hairline, 48px tall, no shadow.
           On a laptop the section links live here rather than in a tab bar. */}
       <header className="sticky top-0 z-40 border-b border-hairline bg-canvas">
-        <div className="flex h-12 w-full items-center gap-2 px-4 sm:px-6 lg:px-16">
+        <div className="flex h-12 w-full items-center gap-2 px-6 sm:px-10 lg:px-16">
           <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={t('brandName')}>
             <Logo size={28} />
             {/*
