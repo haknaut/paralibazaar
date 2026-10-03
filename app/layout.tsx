@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               from `lg` up, so the reserved space stops there too. */}
           {/* Full-bleed on desktop: the content fills the viewport width
               instead of floating in a narrow centred column. */}
-          <main className="w-full px-4 pt-4 pb-28 sm:px-6 sm:pb-16 lg:px-10 lg:pb-12">
+          <main className="w-full px-4 pt-4 pb-28 sm:px-6 sm:pb-16 lg:px-16 lg:pb-12">
             {children}
           </main>
           <BottomNav />
