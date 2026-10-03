@@ -1,0 +1,8 @@
+{
+  "cases": [
+    { "label": "Punjabi (Gurmukhi)", "text": "ਮੇਰੇ 15 ਏਕੜ ਕਣਕ ਦੀ ਪਰਾਲੀ ਹੈ, ਮੁਕਤਸਰ, ਅੱਜ ਤੱਯਾਰ ਹੈ, ਗੱਲੀ ਬਣੀ" },
+    { "label": "Hindi (Devanagari)", "text": "मेरे 8 एकड़ धान लुधियाना में 3 दिन में तैयार" },
+    { "label": "Punjabi paddy", "text": "ਜਸਪੁਰ ਵਿੱਚ 20 ਏਕੜ ਝੋਨਾ, 7 ਦਿਨ ਬਾਅਦ" },
+    { "label": "Romanised Punjabi", "text": "Mere 10 acre jhona hai, Ludhiana, 5 din ch ready" }
+  ]
+}

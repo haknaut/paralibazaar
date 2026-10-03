@@ -1,0 +1,34 @@
+# Render blueprint — one persistent Node web service.
+#
+# Why a web service and not a serverless platform: ParaliBazaar keeps its
+# marketplace in process memory (see lib/store.ts). A serverless host may serve
+# each request from a different instance, so a listing posted on /farmer would
+# not appear on /buyer. A single long-lived process behaves exactly like
+# `npm run dev` on a laptop, which is what the demo needs.
+#
+# Deploy: push this repo to GitHub, then in Render choose
+# New + > Blueprint and point it at the repository.
+#
+# Free tier note: Render spins a free service down after ~15 minutes without
+# traffic, and the next request pays a cold start. Open the URL a few minutes
+# before you present to warm it up.
+services:
+  - type: web
+    name: paralibazaar
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci && npm run build
+    # `next start` reads PORT from the environment; Render assigns it.
+    # Do not hardcode a port here.
+    startCommand: npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.18.0
+      # Both are optional. Without them the app falls back to the regex intent
+      # parser and to seeded sample hotspots, and says so on screen.
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FIRMS_MAP_KEY
+        sync: false
