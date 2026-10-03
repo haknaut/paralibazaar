@@ -481,6 +481,33 @@ html[data-theme='dark'] .leaflet-tile-pane {
   .btn-primary {
     background: var(--color-primary);
     color: var(--color-on-primary);
+    /* Light sweep on hover — the one flourish primary buttons get. */
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -70%;
+    width: 45%;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgba(255, 255, 255, 0.32),
+      transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.55s var(--ease-standard);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .btn-primary:hover:not(:disabled)::after {
+    left: 135%;
   }
 
   .btn-primary:hover:not(:disabled) {
@@ -597,6 +624,36 @@ html[data-theme='dark'] .leaflet-tile-pane {
 @layer utilities {
   .safe-bottom {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+  }
+
+  /* Scroll reveal states (see components/Reveal.tsx). Slow and decelerating
+     on purpose — cheap-feeling motion is fast and linear. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.8s var(--ease-entrance),
+      transform 0.8s var(--ease-entrance);
+    will-change: opacity, transform;
+  }
+
+  .reveal-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.8s var(--ease-entrance),
+      transform 0.8s var(--ease-entrance);
+  }
+
+  /* Seamless ticker: the track holds two identical halves and slides -50%. */
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+
+  /* Slow cinematic push on the hero photograph. Barely perceptible per
+     second — that is the point. */
+  .animate-kenburns {
+    animation: kenburns 26s var(--ease-standard) infinite alternate;
   }
 
   /* Motion is restrained on purpose — Carbon resists decoration. It moves to
@@ -719,6 +776,42 @@ html[data-theme='dark'] .leaflet-tile-pane {
   }
   to {
     background-position: 0 50%;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.09);
+  }
+}
+
+/* Map pins pop in rather than blinking on. The inner span is ours — Leaflet
+   owns the outer element's transform for positioning, so animating the outer
+   would fight the pan/zoom math. */
+.parali-marker > span {
+  animation: marker-pop 0.45s var(--ease-entrance) both;
+}
+
+@keyframes marker-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

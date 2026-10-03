@@ -52,6 +52,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             loads on demand; without this the first paint waits on discovery. */}
         <link rel="preload" href="/fonts/GoogleSans-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/MaterialSymbolsRounded-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        {/* Reveal animations need JS; without it the content must be visible. */}
+        <noscript>
+          <style>{'.reveal{opacity:1 !important;transform:none !important;}'}</style>
+        </noscript>
       </head>
       <body className="min-h-dvh bg-canvas font-sans antialiased">
         <I18nProvider>

@@ -6,6 +6,7 @@ import { useI18n } from '@/lib/i18n';
 import { IMAGES } from '@/lib/constants';
 import { ImpactCounters } from './ImpactCounters';
 import { Icon } from './Icon';
+import { Reveal } from './Reveal';
 
 const STEPS = [
   {
@@ -54,7 +55,7 @@ export function LandingContent() {
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 1152px"
-          className="object-cover"
+          className="animate-kenburns object-cover"
         />
         {/* Directional scrim, not a uniform one. Text sits in the left column,
             so the left stays opaque for contrast and the photo is allowed to
@@ -65,15 +66,18 @@ export function LandingContent() {
         <div className="absolute inset-0 bg-gradient-to-t from-hero/80 via-hero/30 to-transparent lg:hidden" />
 
         <div className="relative w-full px-6 py-16 sm:px-10 sm:py-24 lg:px-16">
-          <p className="mb-5 inline-flex items-center gap-2 bg-accent px-3 py-1 text-caption text-on-accent">
+          <p className="animate-rise mb-5 inline-flex items-center gap-2 bg-accent px-3 py-1 text-caption text-on-accent">
             <Icon name="earth" size={14} /> {t('heroKicker')}
           </p>
-          <h1 className="max-w-3xl text-display-md text-hero-ink [text-wrap:balance] sm:text-display-lg">
+          <h1
+            className="animate-rise max-w-3xl text-display-md text-hero-ink [text-wrap:balance] sm:text-display-lg"
+            style={{ animationDelay: '90ms' }}
+          >
             {t('heroHeadline')}
           </h1>
-          <p className="mt-5 max-w-xl text-body-lg text-hero-ink-muted">{t('heroSub')}</p>
+          <p className="animate-rise mt-5 max-w-xl text-body-lg text-hero-ink-muted" style={{ animationDelay: '180ms' }}>{t('heroSub')}</p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '260ms' }}>
             <Link href="/farmer" className="btn btn-primary">
               <Icon name="wheat" size={18} /> {t('heroCtaFarmer')}
             </Link>
@@ -87,9 +91,34 @@ export function LandingContent() {
         </div>
       </section>
 
+      {/* ------------------------ ticker -------------------------
+          A trilingual marquee: the pitch, scrolling. Two identical halves so
+          the -50% loop has no seam. Decorative — screen readers get the real
+          copy in the sections below. */}
+      <div
+        aria-hidden="true"
+        className="overflow-hidden border-b border-hairline bg-ink text-inverse-ink"
+      >
+        <div className="animate-marquee flex w-max">
+          {[0, 1].map((half) => (
+            <div key={half} className="flex items-center gap-10 pr-10">
+              {[t('brandTagline'), t('howTitle'), t('communityTitle'), t('impactTitle')].map(
+                (phrase, i) => (
+                  <span key={i} className="flex items-center gap-10 py-2.5 text-body-sm whitespace-nowrap">
+                    {phrase}
+                    <Icon name="wheat" size={14} className="text-accent" />
+                  </span>
+                ),
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ------------------------ problem ------------------------ */}
       <section className="border-b border-hairline py-10 sm:py-12">
-        <div className="grid items-center gap-8 lg:grid-cols-2">
+        <Reveal>
+          <div className="grid items-center gap-8 lg:grid-cols-2">
           <div className="order-2 lg:order-1">
             <p className="section-label text-support-error">{t('problemKicker')}</p>
             <h2 className="mt-2 text-headline text-ink sm:text-display-md">
@@ -144,17 +173,21 @@ export function LandingContent() {
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </Reveal>
       </section>
 
       {/* --------------------- how it works --------------------- */}
       <section className="border-b border-hairline bg-surface-1 py-10 sm:py-12">
-        <p className="section-label">{t('howKicker')}</p>
-        <h2 className="mt-2 text-headline text-ink sm:text-display-md">
-          {t('howTitle')}
-        </h2>
+        <Reveal>
+          <p className="section-label">{t('howKicker')}</p>
+          <h2 className="mt-2 text-headline text-ink sm:text-display-md">
+            {t('howTitle')}
+          </h2>
+        </Reveal>
 
-        <ol className="mt-6 grid gap-px bg-hairline sm:grid-cols-3">
+        <Reveal delay={120}>
+          <ol className="mt-6 grid gap-px bg-hairline sm:grid-cols-3">
           {STEPS.map((step) => (
             <li key={step.number} className="bg-canvas">
               <div className="group relative h-40 w-full overflow-hidden lg:h-52">
@@ -176,19 +209,25 @@ export function LandingContent() {
             </li>
           ))}
         </ol>
+        </Reveal>
       </section>
 
       {/* ------------------------- impact ------------------------ */}
       <section className="border-b border-hairline py-10 sm:py-12">
-        <p className="section-label">{t('impactKicker')}</p>
-        <h2 className="mt-2 mb-6 text-headline text-ink sm:text-display-md">
-          {t('impactTitle')}
-        </h2>
-        <ImpactCounters />
+        <Reveal>
+          <p className="section-label">{t('impactKicker')}</p>
+          <h2 className="mt-2 mb-6 text-headline text-ink sm:text-display-md">
+            {t('impactTitle')}
+          </h2>
+        </Reveal>
+        <Reveal delay={120}>
+          <ImpactCounters />
+        </Reveal>
       </section>
 
       {/* ------------------------ community ------------------------ */}
-      <section className="grid items-center gap-8 border-b border-hairline py-10 lg:grid-cols-2 sm:py-12">
+      <Reveal>
+        <section className="grid items-center gap-8 border-b border-hairline py-10 lg:grid-cols-2 sm:py-12">
         <div className="card group overflow-hidden">
           <Image
             src={IMAGES.community}
@@ -222,29 +261,32 @@ export function LandingContent() {
               {t('impactTotalFarmers')} · {t('impactTotalBuyers')}
             </span>
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
+      </Reveal>
 
-      {/* Carbon CTA banner: the one full-bleed blue panel on the page.
+      {/* Carbon CTA banner: the one full-bleed brand panel on the page.
           Left-aligned, not centred — a five-line centred paragraph over a
           narrow measure is the classic ragged-blob banner. */}
-      <section className="mt-10 bg-primary px-6 py-10 sm:px-8 sm:py-14">
+      <Reveal>
+        <section className="mt-10 bg-primary px-6 py-10 sm:px-8 sm:py-14">
         <h2 className="max-w-2xl text-headline text-on-primary [text-wrap:balance]">
           {t('communityTitle')}
         </h2>
         <p className="mt-4 max-w-xl text-body text-on-primary opacity-90">{t('communityBody')}</p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href="/farmer" className="btn bg-on-primary text-primary hover:bg-inverse-surface-1">
-            <Icon name="wheat" size={18} /> {t('heroCtaFarmer')}
-          </Link>
-          <Link
-            href="/buyer"
-            className="btn border border-on-primary text-on-primary hover:bg-inverse-surface-1"
-          >
-            <Icon name="scale" size={18} /> {t('heroCtaBuyer')}
-          </Link>
-        </div>
-      </section>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link href="/farmer" className="btn bg-on-primary text-primary hover:bg-inverse-surface-1">
+              <Icon name="wheat" size={18} /> {t('heroCtaFarmer')}
+            </Link>
+            <Link
+              href="/buyer"
+              className="btn border border-on-primary text-on-primary hover:bg-inverse-surface-1"
+            >
+              <Icon name="scale" size={18} /> {t('heroCtaBuyer')}
+            </Link>
+          </div>
+        </section>
+      </Reveal>
 
       {/* The brand tagline lives here rather than in the 48px header, where a
           two-line lockup could not sit level with the mark. */}
